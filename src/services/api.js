@@ -2,11 +2,15 @@ import axios from 'axios';
 
 // Create axios instance with default config
 const api = axios.create({
-  baseURL: 'http://localhost:5000/api',
-  timeout: 10000,
+  baseURL: import.meta.env.VITE_API_BASE_URL || 'https://render-backend-s6uj.onrender.com/api',
+  timeout: parseInt(import.meta.env.VITE_API_TIMEOUT) || 15000,
   headers: {
     'Content-Type': 'application/json',
   },
+  // Add HTTPS configuration for production
+  httpsAgent: import.meta.env.VITE_NODE_ENV === 'production' ? {
+    rejectUnauthorized: true
+  } : undefined,
 });
 
 // Request interceptor to add auth token
@@ -27,6 +31,14 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   (error) => {
+    // Handle network errors
+    if (!error.response) {
+      console.error('Network error:', error.message);
+      if (error.code === 'NETWORK_ERROR' || error.message.includes('Network Error')) {
+        console.error('Unable to connect to server. Please check your internet connection.');
+      }
+    }
+    
     if (error.response?.status === 401) {
       // Token expired or invalid
       localStorage.removeItem('token');
@@ -39,6 +51,12 @@ api.interceptors.response.use(
       localStorage.removeItem('user');
       window.location.href = '/login';
     }
+    
+    // Log errors in development
+    if (import.meta.env.VITE_NODE_ENV === 'development') {
+      console.error('API Error:', error);
+    }
+    
     return Promise.reject(error);
   }
 );
