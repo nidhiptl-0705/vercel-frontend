@@ -1,0 +1,152 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom animations and styles */
+@layer base {
+  * {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  .glass-effect {
+    @apply bg-white/10 backdrop-blur-md border border-white/20 shadow-xl;
+  }
+  
+  /* Theme-specific glass effects */
+  .glass-effect-light {
+    @apply bg-white/20 backdrop-blur-md border border-white/30 shadow-xl;
+  }
+  
+  .glass-effect-dark {
+    @apply bg-black/20 backdrop-blur-md border border-white/10 shadow-xl;
+  }
+  
+  /* Light Theme */
+  .gradient-bg-light {
+    background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c);
+    background-size: 400% 400%;
+    animation: gradient-xy 15s ease infinite;
+  }
+  
+  /* Medium Dark Theme */
+  .gradient-bg-medium {
+    background: linear-gradient(-45deg, #2d3748, #4a5568, #2b6cb0, #3182ce);
+    background-size: 400% 400%;
+    animation: gradient-xy 15s ease infinite;
+  }
+  
+  /* Dark Theme */
+  .gradient-bg-dark {
+    background: linear-gradient(-45deg, #1a202c, #2d3748, #1e3a8a, #1e40af);
+    background-size: 400% 400%;
+    animation: gradient-xy 15s ease infinite;
+  }
+  
+  /* Very Dark Theme */
+  .gradient-bg-very-dark {
+    background: linear-gradient(-45deg, #0f1419, #1a202c, #0f172a, #1e293b);
+    background-size: 400% 400%;
+    animation: gradient-xy 15s ease infinite;
+  }
+  
+  /* Midnight Theme */
+  .gradient-bg-midnight {
+    background: linear-gradient(-45deg, #000000, #1a1a2e, #16213e, #0f3460);
+    background-size: 400% 400%;
+    animation: gradient-xy 15s ease infinite;
+  }
+  
+  .floating-shape {
+    position: absolute;
+    border-radius: 50%;
+    background: linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+    backdrop-filter: blur(10px);
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  .input-focus-effect {
+    @apply transition-all duration-300 ease-in-out;
+  }
+  
+  .input-focus-effect:focus {
+    @apply transform scale-105 shadow-lg;
+  }
+  
+  .button-hover-effect {
+    @apply transition-all duration-300 ease-in-out transform;
+  }
+  
+  .button-hover-effect:hover {
+    @apply scale-105 shadow-xl;
+  }
+  
+  .button-hover-effect:active {
+    @apply scale-95;
+  }
+  
+  .role-button {
+    @apply transition-all duration-300 ease-in-out transform relative overflow-hidden;
+  }
+  
+  .role-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+  }
+  
+  .role-button:hover::before {
+    left: 100%;
+  }
+  
+  .form-field {
+    @apply transition-all duration-300 ease-in-out;
+  }
+  
+  .form-field:focus {
+    @apply transform scale-105 shadow-lg;
+  }
+  
+  .error-shake {
+    animation: shake 0.5s ease-in-out;
+  }
+  
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+  }
+  
+  .success-pulse {
+    animation: successPulse 0.6s ease-in-out;
+  }
+  
+  @keyframes successPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+  }
+  
+  .lock-icon-glow {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    animation: lockGlow 2s ease-in-out infinite alternate;
+  }
+  
+  @keyframes lockGlow {
+    0% { 
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+      transform: scale(1);
+    }
+    100% { 
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+      transform: scale(1.02);
+    }
+  }
+  
+}
